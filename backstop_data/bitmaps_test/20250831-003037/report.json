@@ -1,0 +1,108 @@
+{
+  "testSuite": "BackstopJS",
+  "tests": [
+    {
+      "pair": {
+        "reference": "..\\bitmaps_reference\\dashy-next-dashboard_Home_0__0_mobile.png",
+        "test": "..\\bitmaps_test\\20250831-003037\\dashy-next-dashboard_Home_0__0_mobile.png",
+        "selector": "",
+        "fileName": "dashy-next-dashboard_Home_0__0_mobile.png",
+        "label": "Home",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/",
+        "expect": 0,
+        "viewportLabel": "mobile",
+        "engineErrorMsg": "page.waitForTimeout is not a function",
+        "error": "Reference file not found C:\\Users\\fabia\\Documents\\Personal\\Trabajo\\git_Projects\\test-codex2\\backstop_data\\bitmaps_reference\\dashy-next-dashboard_Home_0__0_mobile.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "..\\bitmaps_reference\\dashy-next-dashboard_Home_0__1_tablet.png",
+        "test": "..\\bitmaps_test\\20250831-003037\\dashy-next-dashboard_Home_0__1_tablet.png",
+        "selector": "",
+        "fileName": "dashy-next-dashboard_Home_0__1_tablet.png",
+        "label": "Home",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/",
+        "expect": 0,
+        "viewportLabel": "tablet",
+        "engineErrorMsg": "page.waitForTimeout is not a function",
+        "error": "Reference file not found C:\\Users\\fabia\\Documents\\Personal\\Trabajo\\git_Projects\\test-codex2\\backstop_data\\bitmaps_reference\\dashy-next-dashboard_Home_0__1_tablet.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "..\\bitmaps_reference\\dashy-next-dashboard_Home_0__2_desktop.png",
+        "test": "..\\bitmaps_test\\20250831-003037\\dashy-next-dashboard_Home_0__2_desktop.png",
+        "selector": "",
+        "fileName": "dashy-next-dashboard_Home_0__2_desktop.png",
+        "label": "Home",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/",
+        "expect": 0,
+        "viewportLabel": "desktop",
+        "engineErrorMsg": "page.waitForTimeout is not a function",
+        "error": "Reference file not found C:\\Users\\fabia\\Documents\\Personal\\Trabajo\\git_Projects\\test-codex2\\backstop_data\\bitmaps_reference\\dashy-next-dashboard_Home_0__2_desktop.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "..\\bitmaps_reference\\dashy-next-dashboard_Admin_0__0_mobile.png",
+        "test": "..\\bitmaps_test\\20250831-003037\\dashy-next-dashboard_Admin_0__0_mobile.png",
+        "selector": "",
+        "fileName": "dashy-next-dashboard_Admin_0__0_mobile.png",
+        "label": "Admin",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/admin",
+        "expect": 0,
+        "viewportLabel": "mobile",
+        "engineErrorMsg": "page.waitForTimeout is not a function",
+        "error": "Reference file not found C:\\Users\\fabia\\Documents\\Personal\\Trabajo\\git_Projects\\test-codex2\\backstop_data\\bitmaps_reference\\dashy-next-dashboard_Admin_0__0_mobile.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "..\\bitmaps_reference\\dashy-next-dashboard_Admin_0__1_tablet.png",
+        "test": "..\\bitmaps_test\\20250831-003037\\dashy-next-dashboard_Admin_0__1_tablet.png",
+        "selector": "",
+        "fileName": "dashy-next-dashboard_Admin_0__1_tablet.png",
+        "label": "Admin",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/admin",
+        "expect": 0,
+        "viewportLabel": "tablet",
+        "engineErrorMsg": "page.waitForTimeout is not a function",
+        "error": "Reference file not found C:\\Users\\fabia\\Documents\\Personal\\Trabajo\\git_Projects\\test-codex2\\backstop_data\\bitmaps_reference\\dashy-next-dashboard_Admin_0__1_tablet.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "..\\bitmaps_reference\\dashy-next-dashboard_Admin_0__2_desktop.png",
+        "test": "..\\bitmaps_test\\20250831-003037\\dashy-next-dashboard_Admin_0__2_desktop.png",
+        "selector": "",
+        "fileName": "dashy-next-dashboard_Admin_0__2_desktop.png",
+        "label": "Admin",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/admin",
+        "expect": 0,
+        "viewportLabel": "desktop",
+        "engineErrorMsg": "page.waitForTimeout is not a function",
+        "error": "Reference file not found C:\\Users\\fabia\\Documents\\Personal\\Trabajo\\git_Projects\\test-codex2\\backstop_data\\bitmaps_reference\\dashy-next-dashboard_Admin_0__2_desktop.png"
+      },
+      "status": "fail"
+    }
+  ],
+  "id": "dashy-next-dashboard"
+}

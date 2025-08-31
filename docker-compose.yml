@@ -1,0 +1,138 @@
+services:
+  app-pg:
+    image: node:20-bullseye-slim
+    profiles: ["pg"]
+    working_dir: /app
+    command: sh -c "npm install --no-audit --no-fund && npm i --no-save pg && npm run dev:pg"
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_PERSIST_REMOTE: "1"
+      PERSIST_DRIVER: postgres
+      DATABASE_URL: postgres://dashy:dashy@db:5432/dashy
+      PORT: "3000"
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_SECRET: devsecret
+      AUTH_REQUIRED: "1"
+      NEXT_PUBLIC_ADMIN_GROUP: devops
+      KEYCLOAK_ISSUER: http://keycloak:8080/realms/myrealm
+      KEYCLOAK_CLIENT_ID: dashboard
+      KEYCLOAK_CLIENT_SECRET: changeme
+      KEYCLOAK_ADMIN_USER: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    volumes:
+      - ./:/app
+    depends_on:
+      db:
+        condition: service_healthy
+
+  app-sqlite:
+    image: node:20-bullseye-slim
+    profiles: ["sqlite"]
+    working_dir: /app
+    command: sh -c "apt-get update && apt-get install -y python3 make g++ && npm install --no-audit --no-fund && npm i --no-save better-sqlite3 && npm run dev:sqlite"
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_PERSIST_REMOTE: "1"
+      PERSIST_DRIVER: sqlite
+      SQLITE_FILE: /app/data.sqlite
+      PORT: "3000"
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_SECRET: devsecret
+      AUTH_REQUIRED: "1"
+      NEXT_PUBLIC_ADMIN_GROUP: devops
+      KEYCLOAK_ISSUER: http://keycloak:8080/realms/myrealm
+      KEYCLOAK_CLIENT_ID: dashboard
+      KEYCLOAK_CLIENT_SECRET: changeme
+      KEYCLOAK_ADMIN_USER: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    volumes:
+      - ./:/app
+
+  # Production images built with Dockerfile (optimized, no bind mount)
+  web-pg:
+    profiles: ["pg-prod"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DRIVER: postgres
+    environment:
+      NEXT_PUBLIC_PERSIST_REMOTE: "1"
+      PERSIST_DRIVER: postgres
+      DATABASE_URL: postgres://dashy:dashy@db:5432/dashy
+      KEYCLOAK_ISSUER: http://keycloak:8080/realms/myrealm
+      KEYCLOAK_CLIENT_ID: dashboard
+      KEYCLOAK_CLIENT_SECRET: changeme
+      PORT: "3000"
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_SECRET: prodsecretchangeit
+      AUTH_REQUIRED: "1"
+      NEXT_PUBLIC_ADMIN_GROUP: devops
+      KEYCLOAK_ADMIN_USER: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web-sqlite:
+    profiles: ["sqlite-prod"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DRIVER: sqlite
+    environment:
+      NEXT_PUBLIC_PERSIST_REMOTE: "1"
+      PERSIST_DRIVER: sqlite
+      SQLITE_FILE: /data/data.sqlite
+      KEYCLOAK_ISSUER: http://keycloak:8080/realms/myrealm
+      KEYCLOAK_CLIENT_ID: dashboard
+      KEYCLOAK_CLIENT_SECRET: changeme
+      PORT: "3000"
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_SECRET: prodsecretchangeit
+      AUTH_REQUIRED: "1"
+      NEXT_PUBLIC_ADMIN_GROUP: devops
+      KEYCLOAK_ADMIN_USER: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    volumes:
+      - sqldata:/data
+    ports:
+      - "3000:3000"
+
+  db:
+    image: postgres:16-alpine
+    profiles: ["pg"]
+    environment:
+      POSTGRES_USER: dashy
+      POSTGRES_PASSWORD: dashy
+      POSTGRES_DB: dashy
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0
+    profiles: ["pg","pg-prod","sqlite","sqlite-prod"]
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command: ["start-dev", "--import-realm"]
+    volumes:
+      - ./keycloak:/opt/keycloak/data/import:ro
+    ports:
+      - "8080:8080"
+
+volumes:
+  pgdata: {}
+  sqldata: {}

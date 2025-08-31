@@ -1,0 +1,17 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/page": "app/page.js",
+  "/api/admin/identity/groups/route": "app/api/admin/identity/groups/route.js",
+  "/api/admin/state/route": "app/api/admin/state/route.js",
+  "/api/admin/identity/groups/[id]/route": "app/api/admin/identity/groups/[id]/route.js",
+  "/api/admin/identity/users/[id]/groups/route": "app/api/admin/identity/users/[id]/groups/route.js",
+  "/api/admin/keys/route": "app/api/admin/keys/route.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/api/admin/repair/encoding/route": "app/api/admin/repair/encoding/route.js",
+  "/api/me/route": "app/api/me/route.js",
+  "/api/encoding/convert/route": "app/api/encoding/convert/route.js",
+  "/api/admin/identity/users/route": "app/api/admin/identity/users/route.js",
+  "/api/state/route": "app/api/state/route.js",
+  "/api/admin/identity/users/[id]/route": "app/api/admin/identity/users/[id]/route.js"
+}

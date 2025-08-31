@@ -1,0 +1,66 @@
+{
+  "realm": "myrealm",
+  "enabled": true,
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "sslRequired": "external",
+  "clients": [
+    {
+      "clientId": "dashboard",
+      "protocol": "openid-connect",
+      "enabled": true,
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "changeme",
+      "redirectUris": [
+        "http://localhost:3000/*"
+      ],
+      "webOrigins": [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000"
+      ],
+      "rootUrl": "http://localhost:3000",
+      "attributes": {
+        "post.logout.redirect.uris": "http://localhost:3000/*"
+      },
+      "defaultClientScopes": [
+        "web-origins",
+        "roles",
+        "profile",
+        "email",
+        "groups"
+      ]
+    }
+  ],
+  "groups": [
+    { "name": "devops" },
+    { "name": "dev" }
+  ],
+  "users": [
+    {
+      "username": "devops",
+      "enabled": true,
+      "email": "devops@example.com",
+      "groups": ["devops"],
+      "credentials": [
+        { "type": "password", "value": "devops", "temporary": false }
+      ]
+    },
+    {
+      "username": "dev",
+      "enabled": true,
+      "email": "dev@example.com",
+      "groups": ["dev"],
+      "credentials": [
+        { "type": "password", "value": "dev", "temporary": false }
+      ]
+    }
+  ],
+  "roles": {
+    "realm": []
+  }
+}
+

@@ -1,0 +1,83 @@
+﻿"use client";
+
+import { useDashboard } from "@/components/DashboardContext";
+import { useEffect, useState } from "react";
+
+type Item = { groupId: string; groupTitle: string; tile: { id: string; title: string; url: string; category?: string; favorite?: boolean } };
+
+export function ListView({ items, edit }: { items: Item[]; edit: boolean }) {
+  return (
+    <div className="list-view">
+      <div className="list-header">
+        <div>Nombre</div>
+        <div>CategorÃ­a</div>
+        <div>URL</div>
+        <div>Estado</div>
+        {edit && <div>Acciones</div>}
+      </div>
+      {items.map(({ groupId, tile }) => (
+        <Row key={tile.id} groupId={groupId} tileId={tile.id} edit={edit} />
+      ))}
+    </div>
+  );
+}
+
+function Row({ groupId, tileId, edit }: { groupId: string; tileId: string; edit: boolean }) {
+  const { state, updateTile, removeTile } = useDashboard();
+  const tile = state.groups.find(g => g.id === groupId)?.tiles.find(t => t.id === tileId);
+  const [status, setStatus] = useState<"online" | "offline" | "unknown">("unknown");
+  useEffect(() => {
+    let alive = true;
+    if (!tile) return;
+    ping(tile.url).then(s => alive && setStatus(s));
+    return () => { alive = false; };
+  }, [tile?.url]);
+  if (!tile) return null;
+  return (
+    <div className="list-row">
+      <div>
+        {edit ? (
+          <input value={tile.title} onChange={e => updateTile(groupId, tile.id, { title: e.target.value })} />
+        ) : (
+          tile.title
+        )}
+      </div>
+      <div>
+        {edit ? (
+          <input value={tile.category || ""} onChange={e => updateTile(groupId, tile.id, { category: e.target.value })} />
+        ) : (
+          tile.category || "â€”"
+        )}
+      </div>
+      <div>
+        {edit ? (
+          <input value={tile.url} onChange={e => updateTile(groupId, tile.id, { url: e.target.value })} />
+        ) : (
+          <a href={tile.url} target="_blank" rel="noreferrer">{tile.url}</a>
+        )}
+      </div>
+      <div>
+        <span className={`status-dot status-${status}`} /> {status}
+      </div>
+      {edit && (
+        <div>
+          <button type="button" className="icon-btn" title={tile.favorite ? "Quitar de favoritos" : "Agregar a favoritos"} onClick={() => updateTile(groupId, tile.id, { favorite: !tile.favorite })}>â˜…</button>
+          <button type="button" className="icon-btn" title="Eliminar" onClick={() => removeTile(groupId, tile.id)}>ðŸ—‘ï¸</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+async function ping(url: string): Promise<"online" | "offline" | "unknown"> {
+  try {
+    const controller = new AbortController();
+    const t = setTimeout(() => controller.abort(), 4000);
+    await fetch(url, { mode: "no-cors", signal: controller.signal });
+    clearTimeout(t);
+    return "online"; // si responde sin error, consideramos online (CORS darÃ¡ opaque pero ok)
+  } catch {
+    return "offline";
+  }
+}
+
