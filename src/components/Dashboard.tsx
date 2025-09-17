@@ -13,15 +13,16 @@ export function Dashboard() {
   const { state, setTitle, addGroup, moveGroup, removeGroup, updateGroup, addTile, moveTile } = useDashboard();
 
   const filtered = useMemo(() => {
-    const q = state.search.trim().toLowerCase();
-    const applyFilters = (groups: typeof state.groups) => {
-      const f = state.filters || {};
+    const { groups, search, filters } = state;
+    const q = search.trim().toLowerCase();
+    const applyFilters = (inputGroups: typeof groups) => {
+      const f = filters || {};
       const wantFav = !!f.favoritesOnly;
       const hasCats = f.categories && f.categories.length > 0;
       const hasEnvs = f.envs && f.envs.length > 0;
       const hasCrits = f.criticalities && f.criticalities.length > 0;
       const hasTags = f.tags && f.tags.length > 0;
-      return groups.map(g => ({
+      return inputGroups.map(g => ({
         ...g,
         tiles: g.tiles.filter(t => {
           if (wantFav && !t.favorite) return false;
@@ -34,7 +35,7 @@ export function Dashboard() {
       }));
     };
 
-    const base = applyFilters(state.groups);
+    const base = applyFilters(groups);
     if (!q) return base;
     return base
       .map(g => ({
@@ -42,7 +43,7 @@ export function Dashboard() {
         tiles: g.tiles.filter(t => `${t.title} ${t.url} ${t.description ?? ""}`.toLowerCase().includes(q))
       }))
       .filter(g => g.tiles.length > 0);
-  }, [state.groups, state.search, state.filters]);
+  }, [state]);
 
   const allTiles = useMemo(() => {
     return filtered.flatMap(g => g.tiles.map(t => ({ groupId: g.id, groupTitle: g.title, tile: t })));
@@ -62,12 +63,14 @@ export function Dashboard() {
   return (
     <main className="container">
       <motion.header className="page-header" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}>
-        {state.editMode && (
+        {state.editMode ? (
           <input
             className="title-input"
             value={state.title}
             onChange={e => setTitle(e.target.value)}
           />
+        ) : (
+          <h1 className="title-display">{state.title || "Mi Panel"}</h1>
         )}
         <Toolbar />
       </motion.header>
@@ -141,32 +144,40 @@ export function Dashboard() {
               whileTap={{ scale: 0.99 }}
               transition={{ duration: 0.12 }}
             >
-            >
               + Añadir grupo
             </motion.button>
           )}
         </motion.div>
       ) : state.viewMode === "all" ? (
-          const { active, over } = e;
-          if (!over || active.id === over.id) return;
-          const a = String(active.id);
-          const b = String(over.id);
-          const ga = idToGroup.get(a);
-          const gb = idToGroup.get(b);
-          if (!ga || !gb || ga !== gb) return; // solo reordena dentro del mismo grupo
-          const group = state.groups.find(g => g.id === ga);
-          if (!group) return;
-          const ids = group.tiles.map(t => t.id);
-          const from = ids.indexOf(a);
-          const to = ids.indexOf(b);
-          if (from < 0 || to < 0) return;
-          const dir = from < to ? 1 : -1;
-          for (let i = from; i !== to; i += dir) {
-            moveTile(ga, ids[i], dir as any);
-          }
-        }}>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={(e) => {
+            const { active, over } = e;
+            if (!over || active.id === over.id) return;
+            const a = String(active.id);
+            const b = String(over.id);
+            const ga = idToGroup.get(a);
+            const gb = idToGroup.get(b);
+            if (!ga || !gb || ga !== gb) return; // solo reordena dentro del mismo grupo
+            const group = state.groups.find(g => g.id === ga);
+            if (!group) return;
+            const ids = group.tiles.map(t => t.id);
+            const from = ids.indexOf(a);
+            const to = ids.indexOf(b);
+            if (from < 0 || to < 0) return;
+            const dir = from < to ? 1 : -1;
+            for (let i = from; i !== to; i += dir) {
+              moveTile(ga, ids[i], dir as any);
+            }
+          }}
+        >
           <SortableContext items={allTiles.map(({ tile }) => tile.id)} strategy={rectSortingStrategy}>
-            <motion.div layout className={`tiles tiles-${state.tileStyle}`} style={{ gridTemplateColumns: `repeat(${state.columns}, minmax(0, 1fr))` }}>
+            <motion.div
+              layout
+              className={`tiles tiles-${state.tileStyle}`}
+              style={{ gridTemplateColumns: `repeat(auto-fit, minmax(220px, 1fr))` }}
+            >
               {allTiles.map(({ groupId, groupTitle, tile }) => (
                 <SortableItem key={tile.id} id={tile.id}>
                   <div className="tile-all">
@@ -184,8 +195,4 @@ export function Dashboard() {
     </main>
   );
 }
-
-
-
-
 

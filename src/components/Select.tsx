@@ -3,11 +3,11 @@
 import * as RSelect from "@radix-ui/react-select";
 import { ReactNode } from "react";
 
-export function Select({ value, onValueChange, children, className }: { value: string; onValueChange: (v: string) => void; children: ReactNode; className?: string }) {
+export function Select({ value, onValueChange, children, className, displayLabel }: { value: string; onValueChange: (v: string) => void; children: ReactNode; className?: string; displayLabel?: string }) {
   return (
     <RSelect.Root value={value} onValueChange={onValueChange}>
       <RSelect.Trigger className={"select-trigger " + (className ?? "")} aria-label="Select">
-        <RSelect.Value />
+        {displayLabel ? <span>{displayLabel}</span> : <RSelect.Value />}
         <RSelect.Icon className="select-icon">▾</RSelect.Icon>
       </RSelect.Trigger>
       <RSelect.Portal>
@@ -28,4 +28,3 @@ export function SelectItem({ value, children }: { value: string; children: React
     </RSelect.Item>
   );
 }
-

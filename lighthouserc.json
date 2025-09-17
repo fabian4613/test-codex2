@@ -4,7 +4,11 @@
       "url": [
         "http://localhost:3000/",
         "http://localhost:3000/admin"
-      ]
+      ],
+      "numberOfRuns": 1,
+      "settings": {
+        "chromeFlags": ["--headless=new", "--no-sandbox"]
+      }
     },
     "assert": {
       "assertions": {

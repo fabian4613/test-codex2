@@ -1,0 +1,11 @@
+FROM node:20-bullseye-slim
+
+# Build tools needed for native deps like better-sqlite3
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 make g++ \
+  && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+CMD ["bash", "-lc", "npm install --no-audit --no-fund && npm i --no-save better-sqlite3 && npm run dev:sqlite"]
+

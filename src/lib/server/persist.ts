@@ -4,6 +4,7 @@
 type JsonValue = any;
 
 const DRIVER = (process.env.PERSIST_DRIVER || "").toLowerCase();
+let DISABLED = false;
 
 let initOnce: Promise<void> | null = null;
 
@@ -54,8 +55,17 @@ function getSqliteDb() {
 
 function requireOptional(mod: string) {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    return require(mod);
+    // Use static requires to avoid webpack dynamic require warnings
+    if (mod === "pg") {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      return require("pg");
+    }
+    if (mod === "better-sqlite3") {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      return require("better-sqlite3");
+    }
+    // Unknown module requested — not supported in this codebase
+    throw new Error(`Módulo no soportado: ${mod}`);
   } catch (e) {
     const driver = DRIVER || "";
     throw new Error(`Dependencia faltante '${mod}'. Instala el paquete para usar '${driver}'.`);
@@ -65,13 +75,23 @@ function requireOptional(mod: string) {
 async function ensureInited() {
   if (initOnce) return initOnce;
   initOnce = (async () => {
-    if (DRIVER === "postgres") await ensurePg();
-    else if (DRIVER === "sqlite") await ensureSqlite();
-    else if (!DRIVER) {
-      // no-op: remote persistence deshabilitado
-      return;
-    } else {
-      throw new Error(`PERSIST_DRIVER desconocido: ${DRIVER}`);
+    try {
+      if (DRIVER === "postgres") await ensurePg();
+      else if (DRIVER === "sqlite") await ensureSqlite();
+      else if (!DRIVER) {
+        // remote persistence deshabilitado
+        DISABLED = true;
+        return;
+      } else {
+        // driver inválido
+        DISABLED = true;
+        return;
+      }
+    } catch (e) {
+      // Si faltan dependencias o conexiones fallan, degradar sin romper la app
+      DISABLED = true;
+      // eslint-disable-next-line no-console
+      console.warn(`[persist] deshabilitado: ${(e as any)?.message || e}`);
     }
   })();
   return initOnce;
@@ -79,6 +99,7 @@ async function ensureInited() {
 
 export async function getState(key: string): Promise<JsonValue | null> {
   await ensureInited();
+  if (DISABLED) return null;
   if (DRIVER === "postgres") {
     const pool = getPgPool();
     const { rows } = await pool.query("SELECT content FROM dashboard_state WHERE key = $1", [key]);
@@ -96,6 +117,7 @@ export async function getState(key: string): Promise<JsonValue | null> {
 
 export async function putState(key: string, content: JsonValue): Promise<void> {
   await ensureInited();
+  if (DISABLED) return; // no-op si está deshabilitado
   if (DRIVER === "postgres") {
     const pool = getPgPool();
     await pool.query(

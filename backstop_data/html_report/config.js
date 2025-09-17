@@ -3,8 +3,8 @@ report({
   "tests": [
     {
       "pair": {
-        "reference": "..\\bitmaps_reference\\dashy-next-dashboard_Home_0_document_0_mobile.png",
-        "test": "..\\bitmaps_test\\20250831-003302\\dashy-next-dashboard_Home_0_document_0_mobile.png",
+        "reference": "../bitmaps_reference/dashy-next-dashboard_Home_0_document_0_mobile.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_Home_0_document_0_mobile.png",
         "selector": "document",
         "fileName": "dashy-next-dashboard_Home_0_document_0_mobile.png",
         "label": "Home",
@@ -26,8 +26,8 @@ report({
     },
     {
       "pair": {
-        "reference": "..\\bitmaps_reference\\dashy-next-dashboard_Home_0_document_1_tablet.png",
-        "test": "..\\bitmaps_test\\20250831-003302\\dashy-next-dashboard_Home_0_document_1_tablet.png",
+        "reference": "../bitmaps_reference/dashy-next-dashboard_Home_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_Home_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "dashy-next-dashboard_Home_0_document_1_tablet.png",
         "label": "Home",
@@ -49,8 +49,8 @@ report({
     },
     {
       "pair": {
-        "reference": "..\\bitmaps_reference\\dashy-next-dashboard_Home_0_document_2_desktop.png",
-        "test": "..\\bitmaps_test\\20250831-003302\\dashy-next-dashboard_Home_0_document_2_desktop.png",
+        "reference": "../bitmaps_reference/dashy-next-dashboard_Home_0_document_2_desktop.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_Home_0_document_2_desktop.png",
         "selector": "document",
         "fileName": "dashy-next-dashboard_Home_0_document_2_desktop.png",
         "label": "Home",
@@ -72,8 +72,307 @@ report({
     },
     {
       "pair": {
-        "reference": "..\\bitmaps_reference\\dashy-next-dashboard_Admin_0_document_0_mobile.png",
-        "test": "..\\bitmaps_test\\20250831-003302\\dashy-next-dashboard_Admin_0_document_0_mobile.png",
+        "reference": "../bitmaps_reference/dashy-next-dashboard_Home_0_document_3_wide.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_Home_0_document_3_wide.png",
+        "selector": "document",
+        "fileName": "dashy-next-dashboard_Home_0_document_3_wide.png",
+        "label": "Home",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/",
+        "expect": 0,
+        "viewportLabel": "wide",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/dashy-next-dashboard_HomeToolbar_0_toolbar_0_mobile.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_HomeToolbar_0_toolbar_0_mobile.png",
+        "selector": ".toolbar",
+        "fileName": "dashy-next-dashboard_HomeToolbar_0_toolbar_0_mobile.png",
+        "label": "Home:Toolbar",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/",
+        "expect": 0,
+        "viewportLabel": "mobile",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/dashy-next-dashboard_HomeToolbar_0_toolbar_1_tablet.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_HomeToolbar_0_toolbar_1_tablet.png",
+        "selector": ".toolbar",
+        "fileName": "dashy-next-dashboard_HomeToolbar_0_toolbar_1_tablet.png",
+        "label": "Home:Toolbar",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/",
+        "expect": 0,
+        "viewportLabel": "tablet",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/dashy-next-dashboard_HomeToolbar_0_toolbar_2_desktop.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_HomeToolbar_0_toolbar_2_desktop.png",
+        "selector": ".toolbar",
+        "fileName": "dashy-next-dashboard_HomeToolbar_0_toolbar_2_desktop.png",
+        "label": "Home:Toolbar",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/",
+        "expect": 0,
+        "viewportLabel": "desktop",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/dashy-next-dashboard_HomeToolbar_0_toolbar_3_wide.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_HomeToolbar_0_toolbar_3_wide.png",
+        "selector": ".toolbar",
+        "fileName": "dashy-next-dashboard_HomeToolbar_0_toolbar_3_wide.png",
+        "label": "Home:Toolbar",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/",
+        "expect": 0,
+        "viewportLabel": "wide",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/dashy-next-dashboard_HomeToolbar_Advanced_0_toolbar_0_mobile.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_HomeToolbar_Advanced_0_toolbar_0_mobile.png",
+        "selector": ".toolbar",
+        "fileName": "dashy-next-dashboard_HomeToolbar_Advanced_0_toolbar_0_mobile.png",
+        "label": "Home:Toolbar Advanced",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/",
+        "expect": 0,
+        "viewportLabel": "mobile",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/dashy-next-dashboard_HomeToolbar_Advanced_0_toolbar_1_tablet.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_HomeToolbar_Advanced_0_toolbar_1_tablet.png",
+        "selector": ".toolbar",
+        "fileName": "dashy-next-dashboard_HomeToolbar_Advanced_0_toolbar_1_tablet.png",
+        "label": "Home:Toolbar Advanced",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/",
+        "expect": 0,
+        "viewportLabel": "tablet",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/dashy-next-dashboard_HomeToolbar_Advanced_0_toolbar_2_desktop.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_HomeToolbar_Advanced_0_toolbar_2_desktop.png",
+        "selector": ".toolbar",
+        "fileName": "dashy-next-dashboard_HomeToolbar_Advanced_0_toolbar_2_desktop.png",
+        "label": "Home:Toolbar Advanced",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/",
+        "expect": 0,
+        "viewportLabel": "desktop",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/dashy-next-dashboard_HomeToolbar_Advanced_0_toolbar_3_wide.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_HomeToolbar_Advanced_0_toolbar_3_wide.png",
+        "selector": ".toolbar",
+        "fileName": "dashy-next-dashboard_HomeToolbar_Advanced_0_toolbar_3_wide.png",
+        "label": "Home:Toolbar Advanced",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/",
+        "expect": 0,
+        "viewportLabel": "wide",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/dashy-next-dashboard_HomeToolbar_EditOn_0_toolbar_0_mobile.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_HomeToolbar_EditOn_0_toolbar_0_mobile.png",
+        "selector": ".toolbar",
+        "fileName": "dashy-next-dashboard_HomeToolbar_EditOn_0_toolbar_0_mobile.png",
+        "label": "Home:Toolbar EditOn",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/",
+        "expect": 0,
+        "viewportLabel": "mobile",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/dashy-next-dashboard_HomeToolbar_EditOn_0_toolbar_1_tablet.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_HomeToolbar_EditOn_0_toolbar_1_tablet.png",
+        "selector": ".toolbar",
+        "fileName": "dashy-next-dashboard_HomeToolbar_EditOn_0_toolbar_1_tablet.png",
+        "label": "Home:Toolbar EditOn",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/",
+        "expect": 0,
+        "viewportLabel": "tablet",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/dashy-next-dashboard_HomeToolbar_EditOn_0_toolbar_2_desktop.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_HomeToolbar_EditOn_0_toolbar_2_desktop.png",
+        "selector": ".toolbar",
+        "fileName": "dashy-next-dashboard_HomeToolbar_EditOn_0_toolbar_2_desktop.png",
+        "label": "Home:Toolbar EditOn",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/",
+        "expect": 0,
+        "viewportLabel": "desktop",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/dashy-next-dashboard_HomeToolbar_EditOn_0_toolbar_3_wide.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_HomeToolbar_EditOn_0_toolbar_3_wide.png",
+        "selector": ".toolbar",
+        "fileName": "dashy-next-dashboard_HomeToolbar_EditOn_0_toolbar_3_wide.png",
+        "label": "Home:Toolbar EditOn",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/",
+        "expect": 0,
+        "viewportLabel": "wide",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/dashy-next-dashboard_Admin_0_document_0_mobile.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_Admin_0_document_0_mobile.png",
         "selector": "document",
         "fileName": "dashy-next-dashboard_Admin_0_document_0_mobile.png",
         "label": "Admin",
@@ -95,8 +394,8 @@ report({
     },
     {
       "pair": {
-        "reference": "..\\bitmaps_reference\\dashy-next-dashboard_Admin_0_document_1_tablet.png",
-        "test": "..\\bitmaps_test\\20250831-003302\\dashy-next-dashboard_Admin_0_document_1_tablet.png",
+        "reference": "../bitmaps_reference/dashy-next-dashboard_Admin_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_Admin_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "dashy-next-dashboard_Admin_0_document_1_tablet.png",
         "label": "Admin",
@@ -118,8 +417,8 @@ report({
     },
     {
       "pair": {
-        "reference": "..\\bitmaps_reference\\dashy-next-dashboard_Admin_0_document_2_desktop.png",
-        "test": "..\\bitmaps_test\\20250831-003302\\dashy-next-dashboard_Admin_0_document_2_desktop.png",
+        "reference": "../bitmaps_reference/dashy-next-dashboard_Admin_0_document_2_desktop.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_Admin_0_document_2_desktop.png",
         "selector": "document",
         "fileName": "dashy-next-dashboard_Admin_0_document_2_desktop.png",
         "label": "Admin",
@@ -128,6 +427,29 @@ report({
         "url": "http://localhost:3000/admin",
         "expect": 0,
         "viewportLabel": "desktop",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/dashy-next-dashboard_Admin_0_document_3_wide.png",
+        "test": "../bitmaps_test/20250831-161011/dashy-next-dashboard_Admin_0_document_3_wide.png",
+        "selector": "document",
+        "fileName": "dashy-next-dashboard_Admin_0_document_3_wide.png",
+        "label": "Admin",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "http://localhost:3000/admin",
+        "expect": 0,
+        "viewportLabel": "wide",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {

@@ -1,4 +1,4 @@
-// File: C:\Users\fabia\Documents\Personal\Trabajo\git_Projects\test-codex2\src\app\api\admin\identity\users\route.ts
+// File: /app/src/app/api/admin/identity/users/route.ts
 import * as entry from '../../../../../../../src/app/api/admin/identity/users/route.js'
 import type { NextRequest } from 'next/server.js'
 

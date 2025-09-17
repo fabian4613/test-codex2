@@ -57,16 +57,16 @@ export function TileCard({ groupId, tile }: { groupId: string; tile: Tile }) {
             // eslint-disable-next-line @next/next/no-img-element
             <img src={`https://www.google.com/s2/favicons?sz=64&domain=${domain}`} alt="" />
           ) : (
-            <span aria-hidden="true">ðŸ”—</span>
+            <span aria-hidden="true">🔗</span>
           )}
         </a>
         <div className="tile-text">
           {editing ? (
             <>
-              <input className="tile-title" aria-label="TÃ­tulo" value={tile.title} onChange={e => updateTile(groupId, tile.id, { title: e.target.value })} />
+              <input className="tile-title" aria-label="Título" value={tile.title} onChange={e => updateTile(groupId, tile.id, { title: e.target.value })} />
               <input className="tile-url" aria-label="URL" value={tile.url} onChange={e => updateTile(groupId, tile.id, { url: e.target.value })} />
               {typeof tile.description !== "undefined" && (
-                <input className="tile-desc" placeholder="DescripciÃ³n" value={tile.description || ""} onChange={e => updateTile(groupId, tile.id, { description: e.target.value })} />
+                <input className="tile-desc" placeholder="Descripción" value={tile.description || ""} onChange={e => updateTile(groupId, tile.id, { description: e.target.value })} />
               )}
               <div className="tile-meta">
                 <div className="field">
@@ -93,21 +93,21 @@ export function TileCard({ groupId, tile }: { groupId: string; tile: Tile }) {
         <div className="tile-right">
           <div className={`status ${status === "online" ? "ok" : status === "offline" ? "bad" : "unk"}`} title={`Estado: ${status}`} />
           {editing && (
-            <DragHandle aria-label="Arrastrar">â ¿</DragHandle>
+            <DragHandle aria-label="Arrastrar">⋮</DragHandle>
           )}
-          {!editing && (
-            <button
-              type="button"
-              className={`icon-btn fav-btn ${tile.favorite ? "is-on" : ""}`}
-              title={tile.favorite ? "Quitar de favoritos" : "Agregar a favoritos"}
-              onClick={() => {
-                updateTile(groupId, tile.id, { favorite: !tile.favorite });
-                showToast(tile.favorite ? "Quitado de favoritos" : "AÃ±adido a favoritos");
-              }}
-            >
-              <span aria-hidden="true">{tile.favorite ? "â˜…" : "â˜†"}</span>
-            </button>
-          )}
+          <button
+            type="button"
+            className={`favorite-toggle ${tile.favorite ? "is-on" : ""}`}
+            aria-pressed={tile.favorite}
+            title={tile.favorite ? "Quitar de favoritos" : "Agregar a favoritos"}
+            onClick={() => {
+              updateTile(groupId, tile.id, { favorite: !tile.favorite });
+              showToast(tile.favorite ? "Quitado de favoritos" : "Añadido a favoritos");
+            }}
+          >
+            <span className="favorite-icon" aria-hidden="true">{tile.favorite ? "★" : "☆"}</span>
+            <span className="favorite-text">{tile.favorite ? "Favorito" : "Marcar"}</span>
+          </button>
         </div>
       </div>
       {editing && (
@@ -120,16 +120,18 @@ export function TileCard({ groupId, tile }: { groupId: string; tile: Tile }) {
           )}
           <button
             type="button"
-            className={`icon-btn fav-btn ${tile.favorite ? "is-on" : ""}`}
+            className={`favorite-toggle ${tile.favorite ? "is-on" : ""}`}
+            aria-pressed={tile.favorite}
             title={tile.favorite ? "Quitar de favoritos" : "Agregar a favoritos"}
             onClick={() => {
               updateTile(groupId, tile.id, { favorite: !tile.favorite });
-              showToast(tile.favorite ? "Quitado de favoritos" : "AÃ±adido a favoritos");
+              showToast(tile.favorite ? "Quitado de favoritos" : "Añadido a favoritos");
             }}
           >
-            <span aria-hidden="true">{tile.favorite ? "â˜…" : "â˜†"}</span>
+            <span className="favorite-icon" aria-hidden="true">{tile.favorite ? "★" : "☆"}</span>
+            <span className="favorite-text">{tile.favorite ? "Favorito" : "Marcar"}</span>
           </button>
-          <button type="button" className="icon-btn" title={showOpts ? "Ocultar opciones" : "MÃ¡s opciones"} aria-label={showOpts ? "Ocultar opciones" : "MÃ¡s opciones"} onClick={() => setShowOpts(v => !v)}>â‹¯</button>
+          <button type="button" className="icon-btn" title={showOpts ? "Ocultar opciones" : "Más opciones"} aria-label={showOpts ? "Ocultar opciones" : "Más opciones"} onClick={() => setShowOpts(v => !v)}>⋯</button>
           <button type="button" className="icon-btn" title="Eliminar" aria-label="Eliminar" onClick={() => removeTile(groupId, tile.id)}>🗑️</button>
         </div>
       )}
@@ -158,4 +160,3 @@ function safeDomain(url: string) {
 }
 
 // sin categorÃ­a/entorno/criticidad: solo tags
-

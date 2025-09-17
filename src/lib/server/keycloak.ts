@@ -179,3 +179,8 @@ export async function kcGroupMembers(groupId: string, first?: number, max?: numb
   const q = params.toString() ? `?${params.toString()}` : "";
   return kc("GET", `/admin/realms/${realm}/groups/${groupId}/members${q}`);
 }
+
+export async function kcGetUser(id: string): Promise<any> {
+  const { realm } = parseIssuer();
+  return kc("GET", `/admin/realms/${realm}/users/${id}`);
+}

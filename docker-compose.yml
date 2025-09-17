@@ -4,6 +4,7 @@ services:
     profiles: ["pg"]
     working_dir: /app
     command: sh -c "npm install --no-audit --no-fund && npm i --no-save pg && npm run dev:pg"
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
     ports:
       - "3000:3000"
     environment:
@@ -27,10 +28,13 @@ services:
         condition: service_healthy
 
   app-sqlite:
-    image: node:20-bullseye-slim
+    build:
+      context: .
+      dockerfile: Dockerfile.dev-sqlite
     profiles: ["sqlite"]
     working_dir: /app
-    command: sh -c "apt-get update && apt-get install -y python3 make g++ && npm install --no-audit --no-fund && npm i --no-save better-sqlite3 && npm run dev:sqlite"
+    command: bash -lc "npm install --no-audit --no-fund && npm i --no-save better-sqlite3 && npm run dev:sqlite"
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
     ports:
       - "3000:3000"
     environment:
@@ -89,16 +93,16 @@ services:
       NEXT_PUBLIC_PERSIST_REMOTE: "1"
       PERSIST_DRIVER: sqlite
       SQLITE_FILE: /data/data.sqlite
-      KEYCLOAK_ISSUER: http://keycloak:8080/realms/myrealm
-      KEYCLOAK_CLIENT_ID: dashboard
-      KEYCLOAK_CLIENT_SECRET: changeme
+      KEYCLOAK_ISSUER: https://kc-devops-msgc.gcba.gob.ar/realms/devops-dgsisan
+      KEYCLOAK_CLIENT_ID: portal-devops-msgc.gcba.gob.ar
+      KEYCLOAK_CLIENT_SECRET: Su28oIgx5ukRoriKLNkYCnUIeiQ95nBf
       PORT: "3000"
       NEXTAUTH_URL: http://localhost:3000
       NEXTAUTH_SECRET: prodsecretchangeit
       AUTH_REQUIRED: "1"
-      NEXT_PUBLIC_ADMIN_GROUP: devops
-      KEYCLOAK_ADMIN_USER: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      NEXT_PUBLIC_ADMIN_GROUP: jenkins_devops
+      KEYCLOAK_ADMIN_USER: '20458090921'
+      KEYCLOAK_ADMIN_PASSWORD: 'Vaca5613@.'
     volumes:
       - sqldata:/data
     ports:

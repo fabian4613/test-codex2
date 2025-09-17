@@ -1,8 +1,10 @@
-﻿module.exports = async (page, scenario, vp) => {
-  // Espera pequeños layouts y fuentes
-  await new Promise(r=>setTimeout(r,800));
+module.exports = async (page, scenario, vp) => {
+  // Kill animations/transitions to reduce screenshot diffs
+  try { await page.addStyleTag({ content: `*{animation: none !important; transition: none !important}` }); } catch {}
+  // Small wait for layout/fonts
+  await new Promise(r => setTimeout(r, 800));
 
-  const isReference = (process.env.BACKSTOP_COMMAND||'').includes('reference');
+  const isReference = (process.env.BACKSTOP_COMMAND || '').includes('reference');
   const issues = await page.evaluate(() => {
     function isVisible(el) {
       const cs = window.getComputedStyle(el);
@@ -23,8 +25,8 @@
     const uniq = new Map();
     selectors.forEach(sel => {
       document.querySelectorAll(sel).forEach(el => {
-        if(!isVisible(el)) return;
-        if(!uniq.has(el)) uniq.set(el, el.getBoundingClientRect());
+        if (!isVisible(el)) return;
+        if (!uniq.has(el)) uniq.set(el, el.getBoundingClientRect());
       });
     });
     const nodes = Array.from(uniq.entries()).map(([el, rect]) => ({ el, rect }));
@@ -57,10 +59,11 @@
 
   if (issues.length) {
     if (isReference) {
-      console.warn('Solapes detectados (referencia):', issues.slice(0,5));
+      console.warn('Solapes detectados (referencia):', issues.slice(0, 5));
       return;
     }
     const sample = issues.slice(0, 8);
     throw new Error(`Solapes detectados (${issues.length}). Ejemplos: ` + JSON.stringify(sample));
   }
 };
+

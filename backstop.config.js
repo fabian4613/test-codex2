@@ -7,7 +7,10 @@
     { name: 'wide', width: 1440, height: 900 }
   ],
   scenarios: [
-    { label: 'Home', url: 'http://localhost:3000/', onReadyScript: 'puppet/overlapCheck.js' },
+    { label: 'Home', url: 'http://localhost:3000/', onReadyScript: 'puppet/overlapCheck.js', delay: 600 },
+    { label: 'Home:Toolbar', url: 'http://localhost:3000/', selectors: ['.toolbar'], selectorExpansion: false, onReadyScript: 'puppet/comboCheck.js' },
+    { label: 'Home:Toolbar Advanced', url: 'http://localhost:3000/', selectors: ['.toolbar'], selectorExpansion: false, onReadyScript: 'puppet/openAdvancedCheck.js' },
+    { label: 'Home:Toolbar EditOn', url: 'http://localhost:3000/', selectors: ['.toolbar'], selectorExpansion: false, onReadyScript: 'puppet/editOnCheck.js' },
     { label: 'Admin', url: 'http://localhost:3000/admin', onReadyScript: 'puppet/overlapCheck.js' }
   ],
   paths: {
@@ -18,12 +21,10 @@
     ci_report: 'backstop_data/ci_report'
   },
   engine: 'puppeteer',
+  engineOptions: {
+    args: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage']
+  },
   report: ['browser'],
   asyncCaptureLimit: 3,
   asyncCompareLimit: 5
 };
-
-
-
-
-

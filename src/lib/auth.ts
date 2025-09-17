@@ -1,6 +1,7 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import KeycloakProvider from "next-auth/providers/keycloak";
 import { jwtDecode } from "jwt-decode";
+export { isAdminGroup } from "@/lib/auth-util";
 
 export type Me = {
   authenticated: boolean;
@@ -18,6 +19,7 @@ function getProviders() {
       clientId: KEYCLOAK_CLIENT_ID,
       clientSecret: KEYCLOAK_CLIENT_SECRET,
       issuer: KEYCLOAK_ISSUER
+      // Do not override scope; rely on default client scopes and server fallbacks
     }),
   ];
 }
@@ -46,11 +48,16 @@ export const authOptions: NextAuthOptions = {
           if (Array.isArray(groups)) (token as any).groups = groups;
         } catch {}
       }
+      // Persist access token for server-side probes (userinfo)
+      if (account && (account as any).access_token) {
+        (token as any).accessToken = (account as any).access_token;
+      }
       return token;
     },
     async session({ session, token }) {
       (session as any).sub = token.sub;
       (session as any).groups = (token as any).groups || [];
+      (session as any).accessToken = (token as any).accessToken;
       return session;
     },
   },
@@ -58,7 +65,4 @@ export const authOptions: NextAuthOptions = {
 
 export const { handlers: authHandlers } = NextAuth(authOptions);
 
-export function isAdminGroup(groups?: string[]) {
-  const admin = (process.env.ADMIN_GROUP || process.env.NEXT_PUBLIC_ADMIN_GROUP || "devops").toLowerCase();
-  return !!groups?.some(g => String(g).toLowerCase() === admin);
-}
+// isAdminGroup re-exported from auth-util for server modules

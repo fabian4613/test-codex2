@@ -60,6 +60,18 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
 
   // Load from localStorage on mount
   useEffect(() => {
+    // If URL contains ?profile, prefer that as current key
+    try {
+      if (typeof window !== "undefined") {
+        const sp = new URLSearchParams(window.location.search);
+        const qp = sp.get("profile");
+        if (qp) {
+          persistKeyRef.current = qp;
+          try { window.localStorage.setItem("persist_scope", qp); } catch {}
+        }
+      }
+    } catch {}
+
     const loaded = loadState<DashboardState>();
     if (loaded) setState({ ...defaultState(), ...loaded });
 
@@ -73,7 +85,7 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
           const groups = (info?.groups || []) as string[];
           setMe({ sub, groups, authenticated: !!sub });
           const stored = (typeof window !== "undefined") ? window.localStorage.getItem("persist_scope") : null;
-          let key = stored || (sub ? `user:${sub}` : "default");
+          let key = persistKeyRef.current || stored || (sub ? `user:${sub}` : "default");
           persistKeyRef.current = key;
           return loadStateRemote<DashboardState>(key);
         })
@@ -84,7 +96,8 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  // Persist on changes
+  // Persist on changes (debounced remote to avoid bursts)
+  const saveTimer = useRef<number | null>(null);
   useEffect(() => {
     saveState(state);
     if (typeof document !== "undefined") {
@@ -95,12 +108,14 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
       root.dataset.theme = effective;
     }
 
-    // Optional remote save if enabled
     const remoteOn = (process.env.NEXT_PUBLIC_PERSIST_REMOTE === "1" || process.env.NEXT_PUBLIC_PERSIST_REMOTE === "true");
     if (remoteOn) {
-      // fire-and-forget
-      saveStateRemote(persistKeyRef.current || "default", state).catch(() => {/* ignore */});
+      if (saveTimer.current) window.clearTimeout(saveTimer.current);
+      saveTimer.current = window.setTimeout(() => {
+        saveStateRemote(persistKeyRef.current || "default", state).catch(() => {/* ignore */});
+      }, 600);
     }
+    return () => { if (saveTimer.current) window.clearTimeout(saveTimer.current); };
   }, [state]);
 
   const setTheme = useCallback((theme: Theme) => setState(s => ({ ...s, theme })), []);
@@ -139,7 +154,7 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
 
   const addTile = useCallback((groupId: string) => setState(s => ({
     ...s,
-    groups: s.groups.map(g => g.id === groupId ? ({ ...g, tiles: [...g.tiles, { id: uid(), title: "Nuevo", url: "https://", icon: "â­" }] }) : g)
+    groups: s.groups.map(g => g.id === groupId ? ({ ...g, tiles: [...g.tiles, { id: uid(), title: "Nuevo", url: "https://", icon: "⭐" }] }) : g)
   })), []);
 
   const updateTile = useCallback((groupId: string, tileId: string, patch: Partial<Tile>) => setState(s => ({
@@ -174,6 +189,19 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
   const setPersistKey = useCallback((key: string) => {
     persistKeyRef.current = key;
     if (typeof window !== "undefined") window.localStorage.setItem("persist_scope", key);
+    // Track recent profiles locally for quick access
+    try {
+      if (typeof window !== "undefined") {
+        const raw = window.localStorage.getItem("persist_profiles_recent");
+        const arr = raw ? (JSON.parse(raw) as string[]) : [];
+        const next = [key, ...arr.filter(k => k !== key)].slice(0, 8);
+        window.localStorage.setItem("persist_profiles_recent", JSON.stringify(next));
+        // reflect profile in URL for sharing
+        const url = new URL(window.location.href);
+        url.searchParams.set("profile", key);
+        window.history.replaceState({}, "", url.toString());
+      }
+    } catch {}
     // attempt load for the new key
     loadStateRemote<DashboardState>(key).then(remote => {
       if (remote && typeof remote === "object") setState({ ...defaultState(), ...remote });
@@ -209,5 +237,3 @@ export function useDashboard() {
   if (!ctx) throw new Error("useDashboard debe usarse dentro de DashboardProvider");
   return ctx;
 }
-
-
